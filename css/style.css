@@ -6,7 +6,7 @@ a{text-decoration: none;}
 ul{list-style: none; padding: 0;}
 label{display: inline-block;}
 :disabled{opacity: 0.5; cursor: not-allowed;}
-iframe{border: none;}
+iframe{border: none; padding: .5rem; width: 560px; height: 313px;}
 
 /***** End Section reset*****/
 
@@ -78,7 +78,7 @@ html{font-size: 15px;
 
 /***** Section header *****/  
 
-header{background-color: #000; color: var(--white); position: sticky; top:0; z-index: 1000;}
+header{background-color: #000; color: var(--white); position: sticky; top:0; z-index: 100;}
 h1{font-size: 2rem;}
 h1 a{color: inherit; line-height: 80px; }
 .collapse{line-height: 80px;}
@@ -92,6 +92,13 @@ nav ul li a::after{content: ""; position: absolute; bottom: 0; right: 0; width: 
 background: var(--red); transition: all ease 0.3s;}
 
 nav ul li a:hover::after{left: 0; width: 100%;}
+
+header .menu{display: none; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); border: none;}
+header .menu span{ display: block; height: 2px; background: var(--red); margin: 6px 10px; transition:500ms; transform-origin: left center;}
+.menu.active span:nth-child(1){  transform: translateY(0px) rotate(13deg);}
+.menu.active span:nth-child(2){ opacity: 0; }
+.menu.active span:nth-child(3){ transform: translateY(0px) rotate(-13deg);}
+
 /***** end Section header *****/
 
 
@@ -131,6 +138,7 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 .work .caption p{color: #898989; font-size: 14px; font-weight: 100; line-height:20px; }
 .work:hover .caption{opacity: 1; visibility: visible; bottom: 0;}
 .seemore{font-size: 36px; border: none; color: var(--red); background: none; margin-top: 2rem;}
+.wrap-5 .all:nth-last-child(-n +3){display: none}
 /***** End Section WRAP-5 *****/
 
 
@@ -144,6 +152,17 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 .pager li{margin: 0 0.5rem;}
 .pager a{display: block; width: 10px; aspect-ratio: 1/1; border: 2px solid; color: var(--white); border-radius: 50%;}
 .pager a.active{background: var(--white);}
+    blockquote {
+      display: none;
+    }
+    blockquote.active {
+      display: block;
+      animation: slide 1s ease;
+    }
+    @keyframes slide {
+      from { transform: translateX(20%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
 /***** End Section WRAP-6  *****/
 
 
@@ -156,6 +175,7 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 .gap h3{color: var(--red); font-size: 18px; margin-bottom: 10px;}
 .gap small{font: 100 14px var(--ff); }
 .gap p{font: 100 14px/22px var(--ff); color: #363636; margin-top: 1rem;}
+.wrap-7 .all:nth-last-child(-n +3){display: none}
 /***** End Section WRAP-7 *****/
 
 
@@ -242,6 +262,16 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 
 
 
+/***** Section SIGNUP POPUP & OVERLAY *****/ 
+
+.overlay{background: #0008; position: fixed; inset:0; z-index: 1000;}
+.popup{background: var(--white); padding: 1rem; position: fixed; left: 50%; top: 100px; transform: translateX(-50%); z-index: 1001;}
+.hiddenForm{display: none;}
+.popup label {display: block; margin: 1rem 0;}
+.popup input{float: right; border: 1px solid gray;}
+.popup .btn{width: 100%; margin-top: 1rem; height: 25px;}
+.popup .close{position: absolute; top: 5px; right: 5px; background: none; color: var(--red); border: none; font-size: 1.2rem;}
+/***** End Section SIGNUP POPUP *****/
 
 
 
@@ -300,9 +330,17 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
    .col-ml-10{grid-column: span 10;}
    .col-ml-11{grid-column: span 11;}
    .col-ml-12{grid-column: span 12;}
-   .collapse{display: none;}
+   .collapse{display: none; position: absolute; left: 0;  right: 0; top: 80px; background: #000; padding-bottom: 1rem; }
    .wrap-11 .box {width: 180px; height: 80px;}
-
+   .collapse .flex{flex-flow: column; gap: 0;}
+   nav{width: 100%; margin-left: 0;}
+   nav li{line-height: 30px; border-bottom: 1px solid var(--white);}
+   .signup{align-self: end; color: #e84343; margin: 1rem 1rem auto;}
+   header .menu{display: block; }
+   nav ul li a{display:block; padding: 0 7px 0; ;}
+   nav ul { border-block: 2px solid; }
+   nav ul li a::after{content: none; display: none;}
+   iframe{border: none; padding: .5rem; width: 460px; height: 213px;}
 }
 
 @media  screen and (max-width: 460px) {   /* mobile portrait */
@@ -331,6 +369,7 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 .wrap-11 .box {width: 145px; height: 80px;}
 .wrap-12 button{ height: 50px;}
 .wrap-12{ padding: 100px 0 100px; }
+iframe{ width: 300px; height: 150px;}
 }
 
 /** End Section media queries */
