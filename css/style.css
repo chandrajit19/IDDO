@@ -152,17 +152,32 @@ h2{font-size: 72px; font-weight: 700; line-height: 60px; border-bottom: 10px sol
 .pager li{margin: 0 0.5rem;}
 .pager a{display: block; width: 10px; aspect-ratio: 1/1; border: 2px solid; color: var(--white); border-radius: 50%;}
 .pager a.active{background: var(--white);}
-    blockquote {
-      display: none;
-    }
-    blockquote.active {
-      display: block;
-      animation: slide 1s ease;
-    }
-    @keyframes slide {
-      from { transform: translateX(20%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
+.quote-container {
+  position: relative;
+  height: 200px; /* or auto if quotes have flexible height */
+  overflow: hidden;
+}
+
+blockquote {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  /* transform: translateX(100%);
+  transition: all 0.5s linear;
+  z-index: 0; */
+
+}
+
+blockquote.active {
+  opacity: 1;
+  /* transform: translateX(0);
+  z-index: 2; */
+
+}
+ 
+   
 /***** End Section WRAP-6  *****/
 
 

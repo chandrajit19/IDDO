@@ -256,6 +256,7 @@
          <div class="row">
             <div class="col-2"></div>
             <div class="col-8 col-t-12">
+               <div class="quote-container">
                <blockquote class="active">
                   <p>
                      <q>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, quia?</q>
@@ -266,7 +267,7 @@
 
                   </footer>
                </blockquote>
-               <blockquote hidden>
+               <blockquote >
                   <p>
                      <q>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, quod!</q>
                   </p>
@@ -276,7 +277,7 @@
 
                   </footer>
                </blockquote>
-               <blockquote hidden>
+               <blockquote >
                   <p>
                      <q>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius, aut.</q>
                   </p>
@@ -286,10 +287,11 @@
 
                   </footer>
                </blockquote>
+               </div>
                <ul class="pager flex justyfy-center">
-                  <li><a class="active" href="#" aria-label="1"></a></li>
-                  <li><a href="#" aria-label="2"></a></li>
-                  <li><a href="#" aria-label="3"></a></li>
+                  <li><a class="active" href="" aria-label="1"></a></li>
+                  <li><a href="" aria-label="2"></a></li>
+                  <li><a href="" aria-label="3"></a></li>
                </ul>
             </div>
             <div class="col-2"></div>
@@ -614,7 +616,7 @@
             $(this).addClass("active");
             if($(this).text()=="All"){
                $(".wrap-5 .all").fadeOut(0); 
-               $(".wrap-5 .all:not(:nth-last-child(-n +3))").fadeIn();
+               $(".wrap-5 .all:not(:nth-last-child(-n +3))").fadeIn(); // show all except last 3
            }  
          else if( $(this).text()=="Website"){
             $(".wrap-5 .all").fadeOut(0);
@@ -628,13 +630,13 @@
 
        $(".wrap-5 .seemore").click(function(){
          $(this).children("span").toggleClass("fa-minus-circle");
-         $(".wrap-5 .all:nth-last-child(-n +3)").slideToggle();
+         $(".wrap-5 .all:nth-last-child(-n +3)").slideToggle(); // toggle last 3 items
        })
 
 
        $(".wrap-7 .seemore").click(function(){
          $(this).children("span").toggleClass("fa-minus-circle");
-         $(".wrap-7 .all:nth-last-child(-n +3)").slideToggle();
+         $(".wrap-7 .all:nth-last-child(-n +3)").slideToggle(); // toggle last 3 items
 
        })
        
@@ -648,7 +650,7 @@
 
 
        $(".wrap-13 button").click(function(){
-         $("html, body").animate({"scrollTop":0}, 800)
+         $("html, body").animate({"scrollTop":0}, 800) // scroll to top
        })
 
        $("header .menu").click(function(){
@@ -670,19 +672,21 @@
        }
 
        $(".signup").click(function(){
-         $("body").append(`<div class="overlay"></div>`);
-         $("body").append(`<div class="popup"></div>`);
-         $("body").css({"overflow-y":"hidden"});
-         clearInterval(idInterval)
+         $("body").append(`<div class="overlay"></div>`); // add overlay
+         $("body").append(`<div class="popup"></div>`); // add popup
+         $("body").css({"overflow-y":"hidden"});        // disable scroll
+
          const form=$(".hiddenForm").html();
          $(".popup").append(form);
          $(".popup input[type='text']").trigger("focus")
 
+         // close popup on close button click
          $(".popup .close").click(function(){
-            $(".popup, .overlay").remove();
-            $("body").css({"overflow-y":"auto"});
+            $(".popup, .overlay").remove(); // remove popup and overlay
+            $("body").css({"overflow-y":"auto"}); // enable scroll
          })
 
+         // close popup on escape key
          $(window).keyup(function(e){
            if(e.which==27){
             $(".popup, .overlay").remove();
@@ -694,21 +698,21 @@
 
       $(".banner button, .banner a").click(function(e){
           e.preventDefault();
-          $("body").append(`<div class="overlay"></div>`);
-          $("body").append(`<div class="popup"></div>`);
-          $("body").css({"overflow-y":"hidden"});
+          $("body").append(`<div class="overlay"></div>`); // add overlay
+          $("body").append(`<div class="popup"></div>`);  // add popup
+          $("body").css({"overflow-y":"hidden"}); // disable scroll
           $(".popup").append(`
                 <button aria-label="Close" class="close" type="button"><span class="fa fa-times"></span></button>
           <iframe  src="https://www.youtube.com/embed/fCnDFHVFAN0?si=UZ7KW15mlP0KVvr6" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`);
 
 
-                   
+        // close popup on close button click           
          $(".popup .close").click(function(){
             $(".popup, .overlay").remove();
             $("body").css({"overflow-y":"auto"});
             startSlider()
          })
-
+         // close popup on escape key
          $(window).keyup(function(e){
            if(e.which==27){
             $(".popup, .overlay").remove();
@@ -718,27 +722,28 @@
          })
       });
 
+      // Function to start the slider
       let quotes = $("blockquote");
       let pagerLinks = $(".pager a");
-      let current = 0;
+      // inserting data-index attribute to pager links
+      pagerLinks.each(function(index) {
+      $(this).attr("data-index", index); 
+      });
 
-      const startSlider=()=>{
-         const idInterval= setInterval(function() {
-        quotes.eq(current).removeClass("active");
-        pagerLinks.eq(current).removeClass("active");
+      pagerLinks.click(function(e) {
+      e.preventDefault();
+      // Get the index from data-index attribute
+      let index = $(this).data("index"); 
+      
+      // Remove active class from all
+      quotes.removeClass("active");
+      pagerLinks.removeClass("active");
 
-        current = (current + 1) % quotes.length;
+      // Add active only to clicked index
+      quotes.eq(index).addClass("active").fadeOut(50).slideDown(1000);
+      $(this).addClass("active");
+      });
 
-        quotes.eq(current).addClass("active");
-        pagerLinks.eq(current).addClass("active");
-      }, 1000);
-      return idInterval;
-      }
-     const idInterval=  startSlider()
-
-      pagerLinks.click(function(e){
-       e.preventDefault()
-      })   
 
 
    });
